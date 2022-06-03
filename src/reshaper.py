@@ -27,13 +27,13 @@ class Reshaper:
     self.mean_vertex = np.load(open(os.path.join(utils.MODEL_DIR, "%s_mean_vertex.npy"%label), "rb"))
     self.std_measure = np.load(open(os.path.join(utils.MODEL_DIR, "%s_std_measure.npy"%label), "rb"))
     self.std_deform = np.load(open(os.path.join(utils.MODEL_DIR, "%s_std_deform.npy"%label), "rb"))
-    self.cp = np.load(open(os.path.join(utils.MODEL_DIR, "cp.npy"), "rb"))
+    self.cp = np.load(open(os.path.join(utils.MODEL_DIR, "cp.npy"), "rb"), allow_pickle=True)
 
     loader = np.load(os.path.join(utils.MODEL_DIR, "%s_d2v.npz"%label))
     self.d2v = scipy.sparse.coo_matrix((loader['data'], (loader['row'], loader['col'])),shape=loader['shape'])
     self.lu = scipy.sparse.linalg.splu(self.d2v.transpose().dot(self.d2v).tocsc())
     self.local_mat = []
-    tmp = np.load(open(os.path.join(utils.MODEL_DIR, "%s_local.npy"%label), "rb"))
+    tmp = np.load(open(os.path.join(utils.MODEL_DIR, "%s_local.npy"%label), "rb"), allow_pickle=True)
     for i in range(0, len(tmp)):
       self.local_mat.append(np.array([c for c in tmp[i]]))
 
